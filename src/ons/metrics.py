@@ -1,5 +1,3 @@
-"""Performance evaluation — transaction costs, metrics, regret."""
-
 from __future__ import annotations
 
 import numpy as np
@@ -38,7 +36,7 @@ def compute_metrics(
     name: str,
 ) -> dict:
     """Compute all evaluation metrics for one strategy."""
-    del gross_returns  # kept for API compatibility with original script
+    del gross_returns
 
     wealth = np.cumprod(1 + net_rets)
     ann_ret = wealth[-1] ** (252 / len(net_rets)) - 1
