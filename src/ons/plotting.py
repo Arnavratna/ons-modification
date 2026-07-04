@@ -1,5 +1,3 @@
-"""Backtest dashboard and weight-evolution plots."""
-
 from __future__ import annotations
 
 import subprocess
@@ -16,7 +14,6 @@ from .metrics import compute_regret_vs_bcrp
 
 
 def _save_and_reveal(fig: plt.Figure, filename: str) -> Path:
-    """Save a figure and open it on macOS (Cursor terminal has no plot window)."""
     path = Path(filename).resolve()
     fig.savefig(path, dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
     print(f"\nSaved → {path}")
@@ -226,7 +223,6 @@ def make_dashboard(results: list[dict]) -> None:
 
 
 def make_weights_figure(results: list[dict], tickers: list[str]) -> None:
-    """Separate figure: one stacked-area weight chart per strategy."""
     n_strats = len(results)
     cols = 2
     rows = (n_strats + 1) // cols
