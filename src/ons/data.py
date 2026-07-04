@@ -1,5 +1,3 @@
-"""Price data loading — Yahoo Finance or synthetic fallback."""
-
 from __future__ import annotations
 
 import numpy as np
@@ -47,7 +45,7 @@ def load_prices_synthetic() -> pd.DataFrame:
         columns=config.TICKERS,
         index=pd.bdate_range(start="2018-01-02", periods=n_days),
     )
-    # inject a 2020-like drawdown around day 500
+    
     prices.iloc[500:540] *= np.linspace(1, 0.70, 40)[:, None]
     prices.iloc[540:600] *= np.linspace(0.70, 1.05, 60)[:, None]
     print(f"  → {len(prices)} synthetic trading days")
