@@ -1,10 +1,7 @@
-"""Shared numerical utilities."""
-
 import numpy as np
 
 
 def project_simplex(v: np.ndarray) -> np.ndarray:
-    """Project onto the probability simplex Δ^n."""
     n = len(v)
     u = np.sort(v)[::-1]
     cssv = np.cumsum(u)
