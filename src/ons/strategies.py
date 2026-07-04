@@ -1,5 +1,3 @@
-"""Portfolio strategy implementations."""
-
 from __future__ import annotations
 
 import numpy as np
@@ -11,10 +9,6 @@ from .utils import project_simplex
 
 
 def run_vanilla_ons(returns: np.ndarray) -> np.ndarray:
-    """
-    Vanilla ONS (Hazan, Agarwal, Kale 2007).
-    Returns weight matrix (T × N).
-    """
     T, N = returns.shape
     delta = config.ONS_DELTA
     beta = config.ONS_BETA
@@ -38,10 +32,7 @@ def run_vanilla_ons(returns: np.ndarray) -> np.ndarray:
 
 
 def run_ma_ons(returns: np.ndarray, lam: float = config.MA_ONS_LAMBDA) -> np.ndarray:
-    """
-    Market-Aware ONS: adds L1 turnover penalty λ‖w - w_prev‖₁ to the loss.
-    Uses proximal gradient on the Newton direction.
-    """
+    #Market-Aware ONS: adds L1 turnover penalty
     T, N = returns.shape
     delta = config.ONS_DELTA
     beta = config.ONS_BETA
@@ -73,7 +64,6 @@ def run_ma_ons(returns: np.ndarray, lam: float = config.MA_ONS_LAMBDA) -> np.nda
 
 
 def run_eg(returns: np.ndarray) -> np.ndarray:
-    """Exponential Gradient portfolio (Kivinen & Warmuth 1997)."""
     T, N = returns.shape
     w = np.ones(N) / N
     weights = np.zeros((T, N))
@@ -93,10 +83,6 @@ def run_equal_weight(returns: np.ndarray) -> np.ndarray:
 
 
 def run_bcrp(returns: np.ndarray, tickers: list[str] | None = None) -> np.ndarray:
-    """
-    Best Constant-Rebalanced Portfolio — hindsight optimal.
-    Solved via convex optimisation.
-    """
     T, N = returns.shape
     tickers = tickers or config.TICKERS
     w0 = np.ones(N) / N
@@ -124,12 +110,7 @@ def run_bcrp(returns: np.ndarray, tickers: list[str] | None = None) -> np.ndarra
 
 
 def run_markowitz(returns: np.ndarray, prices: pd.DataFrame | None = None) -> np.ndarray:
-    """
-    Rolling-window max-Sharpe Markowitz.
-    Uses MKZ_WINDOW days of history; holds constant until next rebalance.
-    Rebalances monthly (≈ every 21 trading days).
-    """
-    del prices  # kept for API compatibility with original script
+    del prices
 
     T, N = returns.shape
     weights = np.zeros((T, N))
